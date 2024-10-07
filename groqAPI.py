@@ -8,18 +8,22 @@ from groq import Groq
 # Load the variables from .env into the environment
 load_dotenv()
 
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY"),
-)
 
-chat_completion = client.chat.completions.create(
+def loadGroqClient():
+    client = Groq(
+        api_key=os.getenv("GROQ_API_KEY"),
+    )
+    return client
+
+def groqMessageRequest(message,client):
+    chat_completion = client.chat.completions.create(
     messages=[
         {
             "role": "user",
-            "content": "Tell me more about Proxima B",
+            "content": message,
         }
     ],
     model="llama-3.1-8b-instant",
-)
+    )
 
-print(chat_completion.choices[0].message.content)
+    return chat_completion.choices[0].message.content
