@@ -9,3 +9,6 @@ This way users can easily stay up to date with topics without spending the time 
 * The articles retrieved would be fed into an LLM model to process the content and essentially filter out  the relevant information
 * Another LLM would be used to present the information in a simplistic format in which the user can easily process.
 * In addition to this a chat interface frontend must be created for the user to interact with QuickNews AI
+
+## Development
+API Keys are stored in .env file. Message Jus_Jar for more information on obtaining keys.
