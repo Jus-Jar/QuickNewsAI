@@ -25,6 +25,22 @@ def llamaMessageRequest(message,client):
     )
     return completion.choices[0].message.content
 
+
+def summarizerAgentRequest(message,client):
+
+    prompt = f"Condense this into short summary paragraphs: {message}"
+
+    completion = client.chat.completions.create(
+    model="meta-llama/llama-3.2-3b-instruct:free",
+    messages=[
+        {
+        "role": "user",
+        "content": prompt
+        }
+    ]
+    )
+    return completion.choices[0].message.content
+
 def liquidMessageRequest(message,client):
     completion = client.chat.completions.create(
     model="liquid/lfm-40b",
@@ -36,3 +52,26 @@ def liquidMessageRequest(message,client):
     ]
     )
     return completion.choices[0].message.content
+
+
+
+import requests
+
+# Define the API endpoint
+url = 'https://openrouter.ai/api/v1/auth/key'
+
+# Define the headers, replace $OPENROUTER_API_KEY with your actual API key
+headers = {
+    'Authorization': "Bearer " + os.getenv("OPENROUTER_API_KEY")
+}
+
+# Make the GET request
+response = requests.get(url, headers=headers)
+
+# Check the response status
+if response.status_code == 200:
+    # If the request was successful, print the result
+    print(response.json())  # Assuming the response is in JSON format
+else:
+    # If there was an error, print the status code and error message
+    print(f"Error: {response.status_code}, {response.text}")

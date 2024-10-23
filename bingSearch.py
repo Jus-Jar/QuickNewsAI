@@ -40,4 +40,4 @@ def extractUrls(queryResponse):
         if 'webPages' in search_results:
             urls = [item['url'] for item in search_results['webPages']['value']]
 
-        return urls
+        return urls[:5]  #returns top 5 links

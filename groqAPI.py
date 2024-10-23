@@ -16,6 +16,7 @@ def loadGroqClient():
     return client
 
 def groqMessageRequest(message,client):
+
     chat_completion = client.chat.completions.create(
     messages=[
         {
@@ -27,3 +28,9 @@ def groqMessageRequest(message,client):
     )
 
     return chat_completion.choices[0].message.content
+
+
+
+def loadSummarizerClient(request):
+    client = loadGroqClient()
+
