@@ -9,6 +9,7 @@ from langgraph.graph import END, StateGraph
 # For State Graph 
 from typing_extensions import TypedDict
 import os
+import gradio as gr
 import json
 
 
@@ -137,10 +138,10 @@ workflow.add_edge("generate", END)
 # Compile the workflow
 local_agent = workflow.compile()
 
-def run_agent(query):
+def run_agent(query,history):
     output = local_agent.invoke({"question": query})
-    print(output["generation"])
+    # print(output["generation"])
+    return {"role": "assistant", "content": output["generation"]}
 
-# Test it out!
-run_agent("Tell me about recent murders in Trinidad and Tobago")
+gr.ChatInterface(run_agent, type="messages", title="QuickNews AI").launch()
 
