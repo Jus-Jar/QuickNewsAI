@@ -41,6 +41,37 @@ def summarizerAgentRequest(message,client):
     )
     return completion.choices[0].message.content
 
+def searchInputAgentRequest(message,client):
+
+    prompt = f" You are QuickNewsAI a chatbot that returns only summarized news articles. Reject any search that differ from this purpose with a message starting with 'Sorry'. Take this prompt and return only a single relevant search query for a web search engine: {message}"
+
+    completion = client.chat.completions.create(
+    model="meta-llama/llama-3.2-3b-instruct:free",
+    messages=[
+        {
+        "role": "user",
+        "content": prompt
+        }
+    ]
+    )
+    return completion.choices[0].message.content
+
+def responseAgentRequest(prompt,data,client):
+
+    prompt = f"You are QuickNewsAI a chatbot that returns only summarized news articles. Respond to this prompt {prompt} in as a short article using this data: {data}"
+
+    completion = client.chat.completions.create(
+    model="meta-llama/llama-3.2-3b-instruct:free",
+    messages=[
+        {
+        "role": "user",
+        "content": prompt
+        }
+    ]
+    )
+    return completion.choices[0].message.content
+
+
 def liquidMessageRequest(message,client):
     completion = client.chat.completions.create(
     model="liquid/lfm-40b",
@@ -75,3 +106,9 @@ if response.status_code == 200:
 else:
     # If there was an error, print the status code and error message
     print(f"Error: {response.status_code}, {response.text}")
+
+
+
+
+# message = "I want to know the latest russia vs ukraine news"
+# print(searchInputAgentRequest(message, loadOpenRouterClient()))
